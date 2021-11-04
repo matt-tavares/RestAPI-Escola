@@ -40,4 +40,4 @@ class Context(Config):
         self.cursor.execute(sql, params or ())
         return self.FetchAll()
 
-CAPP = Context
+CONTEXT = Context

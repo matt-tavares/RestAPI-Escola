@@ -1,8 +1,9 @@
-from context import CAPP
+from context import CONTEXT
 
-class Titulo(CAPP):
+class Titulo(CONTEXT):
     def __init__(self):
-        CAPP.__init__(self)
+        super().__init__()
+        CONTEXT.__init__(self)
 
     def msg_retorno_except(self, code, msg):
         retorno = {"response": {"code:": code, "message": msg}}, code
