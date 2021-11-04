@@ -1,5 +1,5 @@
-# Contexto da aplicação
-# Preencha com os dados do seu banco de dados postgres
+# Preencher com os dados do seu banco de dados postgres
+# Renomear o arquivo para "connection.py"
 
 class Config:
     def __init__(self):
