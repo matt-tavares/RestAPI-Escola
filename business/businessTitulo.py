@@ -5,15 +5,15 @@ class Titulo(CAPP):
         CAPP.__init__(self)
 
     def msg_retorno_except(self, code, msg):
-        retorno = {"Retorno": {"Code:": code, "Message": msg}}, code
+        retorno = {"response": {"code:": code, "message": msg}}, code
         return retorno
 
     def msg_retorno_success(self, code, msg):
-        retorno = {"Retorno": {"Code:": code, "Message": msg}}, code
+        retorno = {"response": {"code:": code, "data": msg}}, code
         return retorno
 
-    def dados_retorno_success(self, msg):
-        retorno = {"data": msg}
+    def dados_retorno_success(self, code, msg):
+        retorno = {"response": {"code":  code,"data": msg}}
         return retorno
 
     # Busca todos os títulos
@@ -22,7 +22,7 @@ class Titulo(CAPP):
             sql = 'SELECT * FROM "production"."titulo";'
             data = self.Query(sql)
             self.Commit()
-            return Titulo.dados_retorno_success(data)
+            return Titulo.dados_retorno_success(200, data)
         except Exception as e:
             menssage = "erro"
             code = 400
@@ -38,7 +38,7 @@ class Titulo(CAPP):
             '''
             data = self.Query(sql, args)
             self.Commit()
-            return data
+            return Titulo.dados_retorno_success(200, data)
         except Exception as e:
             menssage = "erro"
             code = 400
@@ -51,6 +51,7 @@ class Titulo(CAPP):
             self.Commit()
             return Titulo.msg_retorno_success(200, response)
         except Exception as e:
+            self.Commit()
             return Titulo.msg_retorno_except(400, str(e))
 
     def put_titulo(self,  *args):
@@ -68,6 +69,7 @@ class Titulo(CAPP):
             else:
                 return Titulo.msg_retorno_except(400, "erro na alteração")
         except Exception as e:
+            self.Commit()
             return Titulo.msg_retorno_except(400, str(e))
 
     def delete_titulo(self,  *args):
@@ -84,6 +86,7 @@ class Titulo(CAPP):
             else:
                 return Titulo.msg_retorno_except(400, "erro da exclusao")
         except Exception as e:
+            self.Commit()
             return Titulo.msg_retorno_except(400, str(e))
 
 Titulo = Titulo()

@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-import json
 from business.businessTitulo import Titulo
 
 app = Flask(__name__)
@@ -9,7 +8,8 @@ def titulos():
     if request.method == "GET":
         titulos = Titulo.get_titulos()
         return jsonify(titulos)
-    else:
+
+    if request.method == "POST":
         dados = request.json['descricao']
         retorno = Titulo.post_titulo(dados)
         return retorno
@@ -19,8 +19,8 @@ def titulo():
     if request.method == "GET":
         try:
             id = int(request.json['id'])
-            data = Titulo.get_titulo(id)
-            return Titulo.dados_retorno_success(data)
+            titulo = Titulo.get_titulo(id)
+            return jsonify(titulo)
         except Exception as e:
             return str(e), 400
 
